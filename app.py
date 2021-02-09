@@ -50,8 +50,29 @@ def signup():
 #login route
 @app.route("/login", methods=["GET", "POST"])
 def login():
+  message=""
+  if request.method == "POST":
     
-    return render_template("login.html")
+    cin = request.form['cin']
+    email = request.form['email'] 
+
+    user = db.child('users').order_by_child('email').equal_to(email).limit_to_first(1).get()
+    user_data = user.val()
+    user_data = list(user_data.values())
+    cin_inp = user_data[0].get('cin',"Not Found")
+    if cin == cin_inp :
+      session['user'] = user_data
+      return redirect("/user_profile")
+    message ="incorrect email or CIN"
+       
+  return render_template("login.html",message=message)
+
+@app.route("/user_profile")
+def userProfile():
+  if session['user'] != None :
+    user = session['user']
+    return render_template("edit.html",users=user)
+  return redirect("/login")
 
 #logout route
 @app.route("/logout")
@@ -59,10 +80,9 @@ def logout():
     #remove the token setting the user to None
     auth.current_user = None
     #also remove the session
-    #session['usr'] = ""
-    #session["email"] = ""
+    session['user'] = ""
     session.clear()
-    return redirect("/");
+    return redirect("/login")
 
 #create form
 @app.route("/create", methods=["GET", "POST"])
@@ -90,32 +110,47 @@ def create():
   return render_template("create.html")
 
 
-@app.route("/post/<id>")
-def post(id):
-    orderedDict = db.child("Posts").order_by_key().equal_to(id).limit_to_first(1).get()
-    print(orderedDict, file=sys.stderr)
+@app.route("/users/")
+def read_users():
+  import qrcode
+  '''
+  user = {
+    "nom" : "jhon",
+    "prenom" : "doe",
+    "cin" : "878658",
+    "adress" : "dhsuifhuds kjefk london 4545",
+    "email" : "jhondoe@gmail.com",
+    "birthday" : "11/12/1997" }
+  
+  qr = qrcode.QRCode(
+    version=1,
+    error_correction=qrcode.constants.ERROR_CORRECT_L,
+    box_size=10,
+    border=4,
+  )
+  qr.add_data(user["nom"]+user["prenom"]+user["cin"]+user["email"])
+  data =qr.make(fit=True)
+  qr_img = qr.make_image(fill_color="black", back_color="white")
+  path = "static/images/"+user["cin"]+".png"
+  img = qr_img.save(path)
+  
+  user["qr_image_path"] = path
+  
+  db.child("users").push(user)
+  '''
+  #get the users
+  users = db.child("users").get()
+  users_data = users.val()
         
-    return render_template("post.html", data=orderedDict)
+  return render_template("post.html",users =users_data.values() )
 
-@app.route("/edit/<id>", methods=["GET", "POST"])
-def edit(id):
+@app.route("/profile/", methods=["GET", "POST"])
+def get_user():
     if request.method == "POST":
-
-      title = request.form["title"]
-      content = request.form["content"]
-
-      post = {
-        "title": title,
-        "content": content,
-       }
-
-      #update the post
-      db.child("Posts").child(id).update(post)
-      return redirect("/post/" + id) 
-    
-    
-    orderedDict =  db.child("Posts").order_by_key().equal_to(id).limit_to_first(1).get()
-    return render_template("edit.html", data=orderedDict)
+      cin = request.form['cin']
+      user =  db.child("users").order_by_child("cin").equal_to(cin).limit_to_first(1).get()
+      user_data = user.val()
+    return render_template("edit.html", users=user_data.values())
 
 @app.route("/delete/<id>", methods=["POST"])
 def delete(id):
