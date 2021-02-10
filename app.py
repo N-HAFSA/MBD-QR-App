@@ -69,7 +69,7 @@ def login():
 
 @app.route("/user_profile")
 def userProfile():
-  if session['user'] != None :
+  if session  :
     user = session['user']
     return render_template("edit.html",users=user)
   return redirect("/login")
