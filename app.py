@@ -58,12 +58,15 @@ def login():
 
     user = db.child('users').order_by_child('email').equal_to(email).limit_to_first(1).get()
     user_data = user.val()
-    user_data = list(user_data.values())
-    cin_inp = user_data[0].get('cin',"Not Found")
-    if cin == cin_inp :
-      session['user'] = user_data
-      return redirect("/user_profile")
-    message ="incorrect email or CIN"
+    if user_data :  
+      user_data = list(user_data.values())
+      cin_inp = user_data[0].get('cin',"Not Found")
+      if cin == cin_inp :
+        session['user'] = user_data
+        return redirect("/user_profile")
+      message ="incorrect email or CIN"
+    else :
+      message ="incorrect email"
        
   return render_template("login.html",message=message)
 
