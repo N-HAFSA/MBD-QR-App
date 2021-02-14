@@ -55,15 +55,22 @@ def login():
     
     cin = request.form['cin']
     email = request.form['email'] 
+    userType = request.form['usertype']
 
-    user = db.child('users').order_by_child('email').equal_to(email).limit_to_first(1).get()
+    print(userType)
+
+    user = db.child(userType).order_by_child('email').equal_to(email).limit_to_first(1).get()
     user_data = user.val()
     if user_data :  
       user_data = list(user_data.values())
       cin_inp = user_data[0].get('cin',"Not Found")
       if cin == cin_inp :
-        session['user'] = user_data
-        return redirect("/user_profile")
+        if userType == "users" :
+          session['user'] = user_data
+          return redirect("/user_profile")
+        else :
+          session['admin'] = user_data
+          return redirect("/users/")
       message ="incorrect email or CIN"
     else :
       message ="incorrect email"
@@ -72,9 +79,12 @@ def login():
 
 @app.route("/user_profile")
 def userProfile():
-  if session  :
-    user = session['user']
-    return render_template("edit.html",users=user)
+  if session :
+    try :
+      user = session['user']
+      return render_template("edit.html",users=user)
+    except : 
+      return redirect("/login")
   return redirect("/login")
 
 #logout route
@@ -84,6 +94,7 @@ def logout():
     auth.current_user = None
     #also remove the session
     session['user'] = ""
+    session['admin'] = ""
     session.clear()
     return redirect("/login")
 
@@ -115,45 +126,23 @@ def create():
 
 @app.route("/users/")
 def read_users():
-  import qrcode
-  '''
-  user = {
-    "nom" : "jhon",
-    "prenom" : "doe",
-    "cin" : "878658",
-    "adress" : "dhsuifhuds kjefk london 4545",
-    "email" : "jhondoe@gmail.com",
-    "birthday" : "11/12/1997" }
-  
-  qr = qrcode.QRCode(
-    version=1,
-    error_correction=qrcode.constants.ERROR_CORRECT_L,
-    box_size=10,
-    border=4,
-  )
-  qr.add_data(user["nom"]+user["prenom"]+user["cin"]+user["email"])
-  data =qr.make(fit=True)
-  qr_img = qr.make_image(fill_color="black", back_color="white")
-  path = "static/images/"+user["cin"]+".png"
-  img = qr_img.save(path)
-  
-  user["qr_image_path"] = path
-  
-  db.child("users").push(user)
-  '''
-  #get the users
-  users = db.child("users").get()
-  users_data = users.val()
-        
-  return render_template("post.html",users =users_data.values() )
+  if session and session['admin'] :
+    import qrcode
+    #get the users
+    users = db.child("users").get()
+    users_data = users.val()      
+    return render_template("post.html",users =users_data.values() )
+  return redirect('/login')
 
 @app.route("/profile/", methods=["GET", "POST"])
 def get_user():
+  if session and session['admin'] :
     if request.method == "POST":
       cin = request.form['cin']
       user =  db.child("users").order_by_child("cin").equal_to(cin).limit_to_first(1).get()
       user_data = user.val()
     return render_template("edit.html", users=user_data.values())
+  return redirect(('/login'))
 
 @app.route("/delete/<id>", methods=["POST"])
 def delete(id):
