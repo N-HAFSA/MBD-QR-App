@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="team-section section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title text-center">
+            <h3>Appointements
+              <span>List</span>
+            </h3>
+          </div>
+          <div class="tab-content" id="teamTab">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info">
+                            Please Wait...</div>
+                        <div class="alert alert-success" style="display:none;">
+                            <span class="glyphicon glyphicon-ok"></span> Drag table row and cange Order</div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>CIN</th>
+                                    <th>fisrtname</th>
+                                    <th>lastname</th>
+                                    <th>email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%for user in users %}
+                                <tr>
+                                    <td>{{user['cin']}}</td>
+                                    <td>{{user['prenom']}}</td>
+                                    <td>{{user['nom']}}</td>
+                                    <td>{{user['email']}}</td>
+                                    <td>
+                                    <form method="post" action="/profile/">
+                                    <input type="text" hidden value="{{user['cin']}}" name="cin"/>
+                                    <button type="submit"  class="btn btn-primary">more</button>
+                                    </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}

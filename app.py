@@ -4,6 +4,7 @@ import os
 from flask import Flask, render_template, redirect, request, url_for, session
 #coming from pyrebase4
 import pyrebase
+import qrcode
 
 #firebase config
 config = {
@@ -98,30 +99,57 @@ def logout():
     session.clear()
     return redirect("/login")
 
+#appontement route 
+@app.route("/appointement/")
+def appointement():
+  return render_template("appointement.html")
+
 #create form
 @app.route("/create", methods=["GET", "POST"])
 def create():
  
   if request.method == "POST":
     #get the request data
-    title = request.form["title"]
-    content = request.form["content"]
+    nom = request.form["nom"]
+    prenom = request.form["prenom"]
+    cin = request.form["cin"]
+    phone = request.form["phone"]
+    email = request.form["email"]
+    Date = request.form["Date"]
+    Gender = request.form["gender"]
 
     post = {
-      "title": title,
-      "content": content,
+      "nom":nom,
+      "prenom":prenom,
+      "cin":cin,
+      "phone":phone, 
+      "email":email, 
+      "Date":Date, 
+      "Gender":Gender,
+      "qr_image_path":""
      }
 
     try:
-      #print(title, content, file=sys.stderr)
-
       #push the post object to the database
-      db.child("Posts").push(post)
+      key = db.child("users").push(post)
+      id = key["name"]
+      qr = qrcode.QRCode(
+      version=1,
+      error_correction=qrcode.constants.ERROR_CORRECT_L,
+      box_size=10,
+      border=4,
+    )
+      qr.add_data(key["name"])
+      data =qr.make(fit=True)
+      qr_img = qr.make_image(fill_color="black", back_color="white")
+      path = "static/images/"+key["name"]+".png"
+      img = qr_img.save(path)
+      db.child("users").child(id).update({"qr_image_path":path})
       return redirect("/")
     except:
-      return render_template("create.html", message= "Something wrong happened")  
+      return render_template("appointement.html", message= "Something wrong happened")  
 
-  return render_template("create.html")
+  return render_template("appointement.html")
 
 
 @app.route("/users/")
@@ -131,7 +159,7 @@ def read_users():
     #get the users
     users = db.child("users").get()
     users_data = users.val()      
-    return render_template("post.html",users =users_data.values() )
+    return render_template("users.html",users =users_data.values() )
   return redirect('/login')
 
 @app.route("/profile/", methods=["GET", "POST"])
@@ -141,7 +169,7 @@ def get_user():
       cin = request.form['cin']
       user =  db.child("users").order_by_child("cin").equal_to(cin).limit_to_first(1).get()
       user_data = user.val()
-    return render_template("edit.html", users=user_data.values())
+    return render_template("profile.html", users=user_data.values())
   return redirect(('/login'))
 
 @app.route("/delete/<id>", methods=["POST"])

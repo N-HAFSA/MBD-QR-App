@@ -1,36 +1,137 @@
-<!doctype html>
 
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zxx">
 <head>
-  <meta charset="utf-8">
 
-  <title>The HTML5 Herald</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
-  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
-  <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">-->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/profilestyle.css') }}">
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  <!------ Include the above in your HEAD tag ---------->
+  <!-- ** Basic Page Needs ** -->
+  <meta charset="utf-8">
+  <title>QR Rendez-vous</title>
+
+  <!-- ** Mobile Specific Metas ** -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Medical HTML Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="Themefisher">
+  <meta name="generator" content="Themefisher Medical HTML Template v1.0">
+  
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- bootstrap -->
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/plugins/bootstrap/bootstrap.min.css') }}">
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.formvalidation/0.6.1/css/formValidation.min.css" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/plugins/slick/slick.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/plugins/slick/slick-theme.css') }}">
+  <!-- FancyBox -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/plugins/fancybox/jquery.fancybox.min.css') }}">
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/plugins/fontawesome/css/all.min.css') }}">
+  <!-- animate.css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/plugins/animation/animate.min.css') }}">
+  <!-- jquery-ui -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/plugins/jquery-ui/jquery-ui.css') }}">
+  <!-- timePicker -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/plugins/timePicker/timePicker.css') }}">
+  
+  <!-- Stylesheets -->
+  <link href="{{ url_for('static', filename='template/css/style.css') }}" rel="stylesheet">
+  
+  <!--Favicon-->
+  <link rel="icon" href="{{ url_for('static', filename='template/images/favicon.png') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='template/css/login.css') }}">
 
 </head>
 
+
 <body>
- 
- <!-- include the nav -->
- {% include "includes/_nav.html" %}
+  <div class="page-wrapper">
 
 
- <header>
-  <div>  
-  </div>  
-</header>
 
- <main>
-    {% block content %}
-    {% endblock %}     
- </main>
+
+{% include "includes/_nav.html" %}  
+<!-- Section -->
+{% block content %}
+{% endblock %} 
+<!--====  End of Contact Form  ====-->
+<!--Header Upper-->
+    
+
+<!--footer-main-->
+<footer  class="footer-main">
+  <div class="footer-bottom">
+    <div class="container clearfix">
+      <div class="copyright-text">
+        <p>&copy; Copyright 2021.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--End footer-main-->
+
+<!-- scroll-to-top -->
+<div id="back-to-top" class="back-to-top">
+  <i class="fa fa-angle-up"></i>
+</div>
+
+</div>
+<!--End pagewrapper-->
+
+
+<!--Scroll to top-->
+<div class="scroll-to-top scroll-to-target" data-target=".header-top">
+  <span class="icon fa fa-angle-up"></span>
+</div>
+
+
+<!-- jquery -->
+<script src="{{ url_for('static', filename='template/plugins/jquery.min.js') }}"></script>
+<!-- bootstrap -->
+<script src="{{ url_for('static', filename='template/plugins/bootstrap/bootstrap.min.js') }}"></script>
+<!-- Slick Slider -->
+<script src="{{ url_for('static', filename='template/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ url_for('static', filename='template/plugins/slick/slick-animation.min.js') }}"></script>
+<!-- FancyBox -->
+<script src="{{ url_for('static', filename='template/plugins/fancybox/jquery.fancybox.min.js') }}" defer></script>
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
+<script src="{{ url_for('static', filename='template/plugins/google-map/gmap.js') }}" defer></script>
+
+<!-- jquery-ui -->
+<script src="{{ url_for('static', filename='template/plugins/jquery-ui/jquery-ui.js') }}" defer></script>
+<!-- timePicker -->
+<script src="{{ url_for('static', filename='template/plugins/timePicker/timePicker.js') }}" defer></script>
+
+<!-- script js -->
+<script src="{{ url_for('static', filename='template/js/script.js') }}"></script>
+   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.formvalidation/0.6.1/js/formValidation.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.formvalidation/0.6.1/js/framework/bootstrap.min.js"></script>
+
+
+<script>
+  // Check the captcha
+function checkCaptcha(value, validator, $field) {
+    var items = $('#captchaOperation').html().split(' '),
+        sum   = parseInt(items[0]) + parseInt(items[2]);
+    return value == sum;
+}
+
+$(document).ready(function() {
+    // Generate a simple captcha
+    function randomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
+
+    $('#basicBootstrapForm').formValidation();
+});
+</script>
 </body>
+
 </html>
+

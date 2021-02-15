@@ -2,20 +2,67 @@
 
 {% block content %}
   
-    <div class="posts">
-        {% if posts %}
-            {% for post in posts %}
-                <div class="post">
-                    <p class="title"><a href="/post/{{post.key()}}">{{post.val().title}}</a></p>
-                    <p class="author">by {{post.val().author}}</p>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="noposts">
-                
-                <img src="../static/assets/2404627.svg" />
-                <p>What? No posts?, Why don't you try adding your own.</p>
-            </div>
-        {% endif %}
+  <section class="cta">
+    <div class="container">
+      <div class="cta-block row no-gutters">
+        <div class="col-lg-4 col-md-6 emmergency item">
+          <i class="fa fa-phone"></i>
+          <h2>Call US</h2>
+          <a href="tel:+212539393954">+212539393954 </a>
+         </div>
+        <div class="col-lg-4 col-md-6 top-doctor item">
+          <i class="fa fa-envelope"></i>
+          <h2>24 Hour Service</h2>
+          <p>email us on : administration@fstt.ac.ma</p>
+        </div>
+        <div class="col-lg-4 col-md-12 working-time item">
+          <i class="fa fa-hourglass-o"></i>
+          <h2>Working Hours</h2>
+          <ul class="w-hours">
+            <li>Mon - Fri - <span>8:00 - 17:00</span></li>
+            <li>Mon - Fri - <span>8:00 - 17:00</span></li>
+            <li>Mon - Fri - <span>8:00 - 17:00</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </section>
+  
+  
+  <!--team section-->
+  <section class="team-section section">
+    <div class="container">
+      <div class="section-title text-center">
+        <h3>Our 
+          <span>Team</span>
+        </h3>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6">
+          <div class="team-member">
+             <div class="contents text-center">
+              <h4> Khadija Azlaoui</h4>
+              </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="team-member">
+             <div class="contents text-center">
+              <h4> Aimad Sabor</h4>
+             </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="team-member">
+             <div class="contents text-center">
+              <h4>Hafsa Nouiri</h4>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--End team section-->
+  
+
 {% endblock %}

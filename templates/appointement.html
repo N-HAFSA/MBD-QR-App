@@ -1,0 +1,204 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!--Page Title-->
+<section class="page-title text-center" >
+    <div class="container">
+        <div class="title-text">
+            <h1>appointment</h1>
+            <ul class="title-menu clearfix">
+                <li>
+                    <a href="/">home &nbsp;/</a>
+                </li>
+                <li>appointment</li>
+            </ul>
+        </div>
+    </div>
+  </section>
+  <!--End Page Title-->
+<section class="section contact">
+    <!-- container start -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-5 ">
+          <!-- address start -->
+          <div class="address-block">
+            <!-- Location -->
+            <div class="media">
+              <i class="far fa-map"></i>
+              <div class="media-body">
+                <h3>Location</h3>
+                <p>Ancienne Route de l’Aéroport, Km 10, Ziaten. BP : 416.<br>Tanger - Maroc</p>
+              </div>
+            </div>
+            <!-- Phone -->
+            <div class="media">
+              <i class="fas fa-phone"></i>
+              <div class="media-body">
+                <h3>Phone</h3>
+                <p>
+                    + 212 (0) 5 39 39 39 54 
+                  <br>+ 212 (0) 5 39 39 39 55
+                </p>
+              </div>
+            </div>
+            <!-- Email -->
+            <div class="media">
+              <i class="far fa-envelope"></i>
+              <div class="media-body">
+                <h3>Email</h3>
+                <p>
+                administration@fstt.ac.ma
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- address end -->
+        </div>
+        <div class="col-lg-8 col-md-7">
+          <div class="contact-form">
+            <!-- contact form start -->
+            <form method="POST" action="/create"
+                id="basicBootstrapForm" class="form-horizontal"
+                data-fv-framework="bootstrap"
+                data-fv-icon-valid="glyphicon glyphicon-ok"
+                data-fv-icon-invalid="glyphicon glyphicon-remove"
+                data-fv-icon-validating="glyphicon glyphicon-refresh">
+            
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">First name</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" name="nom" placeholder="First Name"
+                            data-fv-notempty="true"
+                            data-fv-notempty-message="The first name  is required" />
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Full name</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" name="prenom" placeholder="Last Name"
+                            data-fv-notempty="true"
+                            data-fv-notempty-message="The last name  is required" />
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">CIN</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" name="cin" placeholder="CIN"
+                            data-fv-notempty="true"
+                            data-fv-notempty-message="The CIN is required"
+            
+                            data-fv-stringlength="true"
+                            data-fv-stringlength-min="5"
+                            data-fv-stringlength-max="10"
+                            data-fv-stringlength-message="The cin must be more than 5 and less than 10 characters long"
+            
+                            data-fv-regexp="true"
+                            data-fv-regexp-regexp="^[a-zA-Z0-9_\.]+$"
+                            data-fv-regexp-message="The CIN can only consist of alphabetical, number, dot and underscore" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Phone Number</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" name="phone" placeholder="0666666666/+212666666666"
+                            data-fv-notempty="true"
+                            data-fv-notempty-message="The phone number is required"
+            
+                            data-fv-regexp="true"
+                            data-fv-regexp-regexp="^((\+212)|0)[.\- ]?[0-9][.\- ]?[0-9][.\- ]?[0-9]\d{6}"
+                            data-fv-notempty-message="The input is not a valid email address" 
+                            data-fv-regexp-message="The CIN can only consist of alphabetical, number, dot and underscore" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Email address</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" name="email" placeholder="example@test.com"
+                            data-fv-notempty="true"
+                            data-fv-notempty-message="The email address is required"
+            
+                            data-fv-emailaddress="true"
+                            data-fv-emailaddress-message="The input is not a valid email address" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xs-3 control-label">Appointement Date</label>
+                    <div class="col-xs-9">
+                        
+                        <input class="form-control" type="text" name="Date" placeholder="MM/DD/YYY" required="" id="datepicker" autocomplete="off">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Gender</label>
+                    <div class="col-xs-9">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender" value="male"
+                                    data-fv-notempty="true"
+                                    data-fv-notempty-message="The gender is required" /> Male
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender" value="female" /> Female
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender" value="other" /> Other
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" id="captchaOperation" ></label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" name="captcha"
+                            data-fv-callback="true"
+                            data-fv-callback-callback="checkCaptcha"
+                            data-fv-callback-message="Wrong answer" />
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <div class="col-xs-9 col-xs-offset-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="agree" value="agree"
+                                    data-fv-notempty="true"
+                                    data-fv-notempty-message="You must agree with the terms and conditions" /> Agree with the terms and conditions
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+            
+                <div class="form-group">
+                    <div class="col-xs-9 col-xs-offset-3">
+                        <button type="submit" class="btn btn-style-one" name="signup" value="Sign up">Submit</button>
+                    </div>
+                </div>
+            </form>
+            <!-- contact form end -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- container end -->
+  </section>
+  <!--====  End of Contact Form  ====-->
+  <!--Header Upper-->
+  <section class="map">
+    <!-- Google Map -->
+    <div id="map"></div>
+  </section>
+  <!--====  End of Google Map  ====-->
+  
+
+
+{% endblock %}
