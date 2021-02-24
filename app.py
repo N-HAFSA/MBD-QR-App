@@ -143,6 +143,7 @@ def create():
       data =qr.make(fit=True)
       qr_img = qr.make_image(fill_color="black", back_color="white")
       path = "static/images/"+key["name"]+".png"
+      print(path)
       img = qr_img.save(path)
       db.child("users").child(id).update({"qr_image_path":path})
       return redirect("/")
